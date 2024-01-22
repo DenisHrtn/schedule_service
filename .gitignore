@@ -1,0 +1,41 @@
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment folder (if you're using virtualenv)
+venv/
+env/
+
+# Ignore database files (if you're using SQLite)
+*.sqlite3
+
+# Ignore logs and temp files
+logs/
+*.log
+*.bak
+*.swp
+*.tmp
+
+# Ignore media and static files (if not using a CDN)
+media/
+static/
+
+# Ignore settings files (these can contain sensitive information)
+*.env
+
+# Ignore local development settings
+local_settings.py
+
+# Ignore database migrations (these can be regenerated)
+#**/migrations/
+
+# Ignore secret key file (if you're using a file for SECRET_KEY)
+secret_key.txt
+
+# Ignore any other files or directories you want to exclude
+# ...
+
+# Ignore the .vscode folder (if you're using Visual Studio Code)
+.vscode/
+
+.DS_Store
