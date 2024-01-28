@@ -19,24 +19,24 @@ class RegistrationAPIView(generics.GenericAPIView):
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
-        confirm_password = request.data.get('confirm_password')
+        password_confirmation = request.data.get('password_confirmation')
 
-        if not all([email, password, confirm_password]):
+        if not all([email, password, password_confirmation]):
             return Response("All fields are required", status=400)
 
-        if User.objects.filter(email=email, code=None).exists():
-            return Response(
-                'User with that email already registered',
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        # if User.objects.filter(email=email, code=None).exists():
+        #     return Response(
+        #         'User with that email already registered',
+        #         status=status.HTTP_400_BAD_REQUEST
+        #     )
+        #
+        # if User.objects.filter(email=email, code__isnull=False).exists():
+        #     return Response(
+        #         'The user has completed the first stage of registration, confirm the code sent to your email.',
+        #         status=status.HTTP_400_BAD_REQUEST
+        #     )
 
-        if User.objects.filter(email=email, code__isnull=False).exists():
-            return Response(
-                'The user has completed the first stage of registration, confirm the code sent to your email.',
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if password and password != confirm_password:
+        if password and password != password_confirmation:
             return Response("Password mismatch", status=400)
 
         serializer = self.get_serializer(data=request.data)

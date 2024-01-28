@@ -50,46 +50,46 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = None
 CSRF_COOKIE_SAMESITE = None
-# CORS *********************************************************************
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:8000"
-)
-
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-    "VIEW",
-    "WEBSOCKET",
-]
-
-CORS_ALLOW_HEADERS = [
-    "XMLHttpRequest",
-    "X_FILENAME",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "X-CSRFToken",
-    "x-requested-with",
-    "Pragma",
-    "Cookie",
-    "Sec-WebSocket-Protocol",
-    'Accept',
-    'Accept-Language',
-    'Content-Type',
-    'Origin',
-    'X-Requested-With',
-]
+# # CORS *********************************************************************
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+#
+# CORS_ORIGIN_WHITELIST = (
+#     "http://localhost:8000"
+# )
+#
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+#     "VIEW",
+#     "WEBSOCKET",
+# ]
+#
+# CORS_ALLOW_HEADERS = [
+#     "XMLHttpRequest",
+#     "X_FILENAME",
+#     "accept-encoding",
+#     "authorization",
+#     "content-type",
+#     "dnt",
+#     "origin",
+#     "user-agent",
+#     "X-CSRFToken",
+#     "x-requested-with",
+#     "Pragma",
+#     "Cookie",
+#     "Sec-WebSocket-Protocol",
+#     'Accept',
+#     'Accept-Language',
+#     'Content-Type',
+#     'Origin',
+#     'X-Requested-With',
+# ]
 
 
 MIDDLEWARE = [

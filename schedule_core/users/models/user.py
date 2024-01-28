@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.conf import settings
 
 from users.managers.user import UserManager
 
 
-class User(AbstractUser):
+class User(AbstractBaseUser):
     id = models.AutoField(
         primary_key=True,
         editable=False,
