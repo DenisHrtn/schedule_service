@@ -3,8 +3,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from rest_framework import generics
+from rest_framework.parsers import MultiPartParser
 
 from users.serializers.register_serializer import RegisterSerializer
+from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
 
 
 User = get_user_model()
@@ -13,6 +15,7 @@ User = get_user_model()
 class RegistrationAPIView(generics.GenericAPIView):
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
+    parser_classes = [MultiPartParser, ]
 
     def post(self, request):
         email = request.data.get('email')
@@ -43,3 +46,8 @@ class RegistrationAPIView(generics.GenericAPIView):
             serializer.save()
             return Response({"message": "Code has been send"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+RegistrationAPIView = apply_swagger_auto_schema(
+    tags=['authentication / register'], excluded_methods=[]
+)(RegistrationAPIView)

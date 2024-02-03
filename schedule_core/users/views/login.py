@@ -2,8 +2,10 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework.parsers import MultiPartParser
 
 from users.serializers.login_serializer import LoginSerializer
+from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
 
 
 class LoginView(generics.GenericAPIView):
@@ -31,6 +33,7 @@ class LoginView(generics.GenericAPIView):
 
     permission_classes = [AllowAny]
     serializer_class = LoginSerializer
+    parser_classes = [MultiPartParser, ]
 
     def post(self, request):
         """
@@ -62,3 +65,8 @@ class LoginView(generics.GenericAPIView):
                 {'message': 'User validation error'}
             )
             return response
+
+
+LoginView = apply_swagger_auto_schema(
+    tags=['authentication / register'], excluded_methods=[]
+)(LoginView)

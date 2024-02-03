@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from rest_framework import permissions, serializers
 from rest_framework import generics
 
+from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
+
 
 class EmptySerializer(serializers.Serializer):
     pass
@@ -48,3 +50,8 @@ class LogoutView(generics.GenericAPIView):
         responce.delete_cookie('access_token')
         responce.delete_cookie('refresh_token')
         return responce
+
+
+LogoutView = apply_swagger_auto_schema(
+    tags=['authentication / register'], excluded_methods=[]
+)(LogoutView)
