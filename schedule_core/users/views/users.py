@@ -70,8 +70,6 @@ class UserDetailAPIView(generics.GenericAPIView):
         else:
             return Response(UserSerializer(user, many=False).data)
 
-    # TODO: Написать sender service и добавить логику на активирование пользователя
-
 
 UsersAPIView = apply_swagger_auto_schema(
     tags=['users'], excluded_methods=[]

@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
@@ -31,7 +31,7 @@ class LoginView(generics.GenericAPIView):
 
     """
 
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny,]
     serializer_class = LoginSerializer
     parser_classes = [MultiPartParser, ]
 
@@ -50,6 +50,12 @@ class LoginView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         user = serializer.validated_data['user']
+
+        if not user.is_active:
+            return Response(
+                'Your account is not active. Please try again.',
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         if user:
             access_token = AccessToken.for_user(user)
