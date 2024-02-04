@@ -11,12 +11,23 @@ from users.permissions.is_blocked import IsBlocked
 
 
 class UsersAPIView(generics.GenericAPIView):
+    """
+    API view for retrieving all active and unblocked users.
+    """
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, IsBlocked]
     parser_classes = [MultiPartParser, ]
 
     @action(methods=['GET'], detail=False)
     def get(self, request):
+        """
+        Retrieve all active and unblocked users.
+
+        Returns:
+            - Response:
+                - 200 (OK): Returns the list of users.
+                - 403 (FORBIDDEN): Returns an error message if the user is not logged in.
+        """
         if not request.user.is_authenticated:
             return Response(
                 'You must be logged in to',
@@ -26,10 +37,46 @@ class UsersAPIView(generics.GenericAPIView):
             users = User.objects.filter(is_blocked=False, is_active=True)
             return Response(UserSerializer(users, many=True).data)
 
-    # TODO: Дописать энпоинты на получение конкретного пользоваетеля и фильтра по определенным пользователям
+
+class UserDetailAPIView(generics.GenericAPIView):
+    """
+    API view for retrieving specific user details.
+    """
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated, IsBlocked]
+    parser_classes = [MultiPartParser, ]
+
+    @action(methods=['GET'], detail=True, url_path='users/(?P<user_id>\d+)')
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve user details by their ID.
+
+        Parameters:
+            - user_id (int):
+            The ID of the user.
+
+        Returns:
+            - Response:
+                - 200 (OK): Returns the user details.
+                - 403 (FORBIDDEN): Returns an error message if the user is blocked or not active.
+              """
+        user_id = kwargs.get('user_id')
+        user = User.objects.filter(id=user_id).first()
+        if user.is_blocked or not user.is_active:
+            return Response(
+                'This user is blocked or not activated',
+                status=status.HTTP_403_FORBIDDEN
+            )
+        else:
+            return Response(UserSerializer(user, many=False).data)
+
     # TODO: Написать sender service и добавить логику на активирование пользователя
 
 
 UsersAPIView = apply_swagger_auto_schema(
     tags=['users'], excluded_methods=[]
 )(UsersAPIView)
+
+UserDetailAPIView = apply_swagger_auto_schema(
+    tags=['users'], excluded_methods=[]
+)(UserDetailAPIView)
