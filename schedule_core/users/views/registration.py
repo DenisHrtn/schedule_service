@@ -80,8 +80,6 @@ class RegistrationAPIView(generics.GenericAPIView):
             return Response({"message": "Code has been send"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # TODO: Написать эндпоинт для подтверждения регистрации
-
 
 RegistrationAPIView = apply_swagger_auto_schema(
     tags=['authentication / register'], excluded_methods=[]

@@ -40,7 +40,7 @@ class EmailService:
                 user.code = code
                 user.save()
         except Exception as e:
-            print(f'Something went wrong {e}')
+            print(f"Something went wrong {e}")
 
     def send_code_to_email(self, email: str):
         """
@@ -49,8 +49,8 @@ class EmailService:
         code = self.generate_code()
         self.save_code(email, code)
 
-        subject = 'Your code for confirmation register'
-        message = f'Your code for confirmation register: {code}'
+        subject = "Your code for confirmation register"
+        message = f"Your code for confirmation register: {code}"
         from_email = settings.EMAIL_HOST_USER
 
         try:
@@ -61,5 +61,24 @@ class EmailService:
                 recipient_list=[email]
             )
         except Exception as e:
-            return Response(f'Something went wrong {e}')
+            return Response(f"Something went wrong {e}")
         return code
+
+    def send_mail(self, email: str, subject: str, message: str):
+        """
+        Send custom email
+        """
+        subject = subject
+        message = message
+        from_email = settings.EMAIL_HOST_USER
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=[email]
+            )
+        except Exception as e:
+            return Response(f"Something went wrong {e}")
+        return Response(f"Email has been sent to {email}", status=status.HTTP_200_OK)

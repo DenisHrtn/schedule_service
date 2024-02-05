@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework import routers
 
 from users.views import UsersAPIView
+from users.views.forgot_password import ForgotPasswordView
 from users.views.logout import LogoutView
 from users.views.registration import RegistrationAPIView
 from users.views.login import LoginView
@@ -17,4 +18,5 @@ urlpatterns = [
     path('users/', UsersAPIView.as_view(), name='users'),
     path('users/<int:user_id>', UserDetailAPIView.as_view(), name='users-detail'),
     path('users/confirmation-register/', ConfirmationRegisterView.as_view(), name='confirmation-register'),
+    path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
 ]
