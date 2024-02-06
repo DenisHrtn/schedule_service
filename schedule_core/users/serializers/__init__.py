@@ -4,3 +4,4 @@ from .profile_serializer import ProfileSerializer
 from .users_serializer import UserSerializer
 from .confirmation_register_serializer import ConfirmationRegisterSerializer
 from .forgot_password_serializer import ForgotPasswordSerializer
+from .change_password_serializer import ChangePasswordSerializer

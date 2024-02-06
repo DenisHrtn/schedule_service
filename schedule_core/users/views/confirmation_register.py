@@ -81,8 +81,6 @@ class ConfirmationRegisterView(generics.GenericAPIView):
             )
 
 
-
-
 ConfirmationRegisterView = apply_swagger_auto_schema(
     tags=['authentication / register'], excluded_methods=[]
 )(ConfirmationRegisterView)

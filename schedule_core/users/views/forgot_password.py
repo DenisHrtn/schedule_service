@@ -8,6 +8,7 @@ from users.models.user import User
 from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
 from users.serializers.forgot_password_serializer import ForgotPasswordSerializer
 from users.services.email_service import EmailService
+from users.permissions.is_blocked import IsBlocked
 
 
 class ForgotPasswordView(generics.GenericAPIView):
@@ -32,7 +33,7 @@ class ForgotPasswordView(generics.GenericAPIView):
             If successful, the user password will be reset and a new password will be sent to the user's email.
 
     """
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny, IsBlocked]
     serializer_class = ForgotPasswordSerializer
     parser_classes = [MultiPartParser]
     sender_service = EmailService()
@@ -73,7 +74,6 @@ class ForgotPasswordView(generics.GenericAPIView):
         )
 
 
-    # TODO Написать эндпоинт для смены пароля
     # TODO Написать эндпоинт для смены инфы о юзере(включая профиль), пользователь должен иметь опцию запрета показа другим своего профиля
 
 ForgotPasswordView = apply_swagger_auto_schema(
