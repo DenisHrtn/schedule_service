@@ -21,4 +21,4 @@ urlpatterns = [
     path('users/confirmation-register/', ConfirmationRegisterView.as_view(), name='confirmation-register'),
     path('forgot-password/', ForgotPasswordView.as_view(), name='forgot-password'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
-]
+] + router.urls

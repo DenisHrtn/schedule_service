@@ -28,14 +28,12 @@ class UsersAPIView(generics.GenericAPIView):
                 - 200 (OK): Returns the list of users.
                 - 403 (FORBIDDEN): Returns an error message if the user is not logged in.
         """
-        if not request.user.is_authenticated:
-            return Response(
-                'You must be logged in to',
-                status=status.HTTP_403_FORBIDDEN
-            )
+        if request.user.is_superuser:
+            users = User.objects.exclude(is_superuser=True)
+            return Response(UserSerializer(users, many=True).data, status=status.HTTP_200_OK)
         else:
-            users = User.objects.filter(is_blocked=False, is_active=True)
-            return Response(UserSerializer(users, many=True).data)
+            users = User.objects.filter(is_blocked=False, is_active=True).exclude(is_superuser=True)
+            return Response(UserSerializer(users, many=True).data, status=status.HTTP_200_OK)
 
 
 class UserDetailAPIView(generics.GenericAPIView):
@@ -64,7 +62,12 @@ class UserDetailAPIView(generics.GenericAPIView):
         user = User.objects.filter(id=user_id).first()
         if user.is_blocked or not user.is_active:
             return Response(
-                'This user is blocked or not activated',
+                "This user is blocked or not activated",
+                status=status.HTTP_403_FORBIDDEN
+            )
+        elif user.is_superuser:
+            return Response(
+                "This user is superuser",
                 status=status.HTTP_403_FORBIDDEN
             )
         else:
