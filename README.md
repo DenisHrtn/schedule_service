@@ -8,6 +8,3 @@
     - run migrations `python manage.py makemigrations` after: `python manage.py migrate`
     - after run a local server `python manage.py runserver` and try to register on API `api/users/register`
     - also you can view the docs of all APIs `127.0.0.1/swagger`
-
-
-`Copyright (c) 2024 DenisHrtn`
