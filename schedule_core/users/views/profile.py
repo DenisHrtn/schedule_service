@@ -9,6 +9,44 @@ from users.permissions.is_blocked import IsBlocked
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing user profiles.
+
+    This ViewSet allows authenticated users to view, create, update, and delete their profiles.
+    Superusers have additional permissions to view all profiles.
+
+    Parameters:
+        - permission_classes ([IsBlocked, permissions.IsAuthenticated]):
+            Permission classes for accessing this viewset.
+            Authenticated users are required, and blocked users are not allowed.
+
+        - serializer_class (ProfileSerializer):
+            Serializer for profile data.
+            It handles validation and serialization of profile information.
+
+    Methods:
+        - get_queryset():
+            Returns the queryset of profiles that the user has permission to access.
+            Superusers can view all profiles, while regular users can only view their own profile.
+
+        - create(request):
+            Handles requests for creating a new profile.
+            This method is not allowed and will return a "Method Not Allowed" response code.
+
+        - update(request):
+            Handles requests for updating the profile.
+            This method is not allowed and will return a "Method Not Allowed" response code.
+
+        - destroy(request):
+            Handles requests for deleting the profile.
+            This method is not allowed and will return a "Method Not Allowed" response code.
+
+        - partial_update(request):
+            Handles requests for partially updating the profile.
+            It allows users to update specific fields in their profile.
+            If the provided data is valid, the profile will be updated and a "200 OK" response will be returned.
+            If the data is invalid, a "400 Bad Request" response will be returned along with validation errors.
+    """
     permission_classes = [IsBlocked, permissions.IsAuthenticated]
     serializer_class = ProfileSerializer
 
@@ -23,6 +61,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema(auto_schema=None)
     def create(self, request, *args, **kwargs):
+        """
+        Method not allowed.
+
+        Creating a new profile is not allowed.
+        """
         return Response(
             "Method Not Allowed",
             status=status.HTTP_403_FORBIDDEN
@@ -30,6 +73,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema(auto_schema=None)
     def update(self, request, *args, **kwargs):
+        """
+        Method not allowed.
+
+        Updating the profile is not allowed.
+        """
         return Response(
             "Method Not Allowed",
             status=status.HTTP_403_FORBIDDEN
@@ -37,6 +85,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema(auto_schema=None)
     def destroy(self, request, *args, **kwargs):
+        """
+        Method not allowed.
+
+        Deleting the profile is not allowed.
+        """
         return Response(
             "Method Not Allowed",
             status=status.HTTP_403_FORBIDDEN
@@ -47,6 +100,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
         operation_id='update_profile'
     )
     def partial_update(self, request, *args, **kwargs):
+        """
+        Update profile fields partially.
+
+        Update specific fields in the user's profile.
+        If the provided data is valid, the profile will be updated and a "200 OK" response will be returned.
+        If the data is invalid, a "400 Bad Request" response will be returned along with validation errors.
+        """
         instance = self.get_object()
         data = request.data
 

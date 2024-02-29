@@ -82,3 +82,41 @@ class EmailService:
         except Exception as e:
             return Response(f"Something went wrong {e}")
         return Response(f"Email has been sent to {email}", status=status.HTTP_200_OK)
+
+    def send_mail_before_blocking(self, email: str, cause: str):
+        """
+        Send email after blocking
+        """
+        subject = "Your has been blocked in service by an admin"
+        message = f"Cause: {cause}"
+        from_email = settings.EMAIL_HOST_USER
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=[email]
+            )
+        except Exception as e:
+            return Response(f"Something went wrong {e}")
+        return Response(f"Email has been sent to {email}", status=status.HTTP_201_CREATED)
+
+    def send_mail_after_unblocking(self, email: str, cause: str):
+        """
+        Send email after blocking
+        """
+        subject = "Your has been unblocked in service by an admin"
+        message = f"Cause: {cause}"
+        from_email = settings.EMAIL_HOST_USER
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=[email]
+            )
+        except Exception as e:
+            return Response(f"Something went wrong {e}")
+        return Response(f"Email has been sent to {email}", status=status.HTTP_201_CREATED)

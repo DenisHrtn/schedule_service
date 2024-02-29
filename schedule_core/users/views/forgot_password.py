@@ -74,7 +74,6 @@ class ForgotPasswordView(generics.GenericAPIView):
         )
 
 
-
 ForgotPasswordView = apply_swagger_auto_schema(
     tags=['change / forgot password'], excluded_methods=[]
 )(ForgotPasswordView)

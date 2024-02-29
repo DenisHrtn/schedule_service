@@ -5,3 +5,5 @@ from .confirmation_register_serializer import ConfirmationRegisterSerializer
 from .forgot_password_serializer import ForgotPasswordSerializer
 from .change_password_serializer import ChangePasswordSerializer
 from .users_serializer import UserSerializer, UserPatchSerializer
+from .block_users_serializer import BlockUsersSerializer
+from .unblock_users_serializer import UnblockUsersSerializer

@@ -6,3 +6,5 @@ from .forgot_password import ForgotPasswordView
 from .change_password import ChangePasswordView
 from .users import UserViewSet
 from .profile import ProfileViewSet
+from .block_users import BlockUsersView
+from .unblock_users import UnblockUsersView
