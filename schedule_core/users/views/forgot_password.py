@@ -74,7 +74,6 @@ class ForgotPasswordView(generics.GenericAPIView):
         )
 
 
-    # TODO Написать эндпоинт для смены инфы о юзере(включая профиль), пользователь должен иметь опцию запрета показа другим своего профиля
 
 ForgotPasswordView = apply_swagger_auto_schema(
     tags=['change / forgot password'], excluded_methods=[]

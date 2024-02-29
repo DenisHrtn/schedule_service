@@ -5,3 +5,4 @@ from .confirmation_register import ConfirmationRegisterView
 from .forgot_password import ForgotPasswordView
 from .change_password import ChangePasswordView
 from .users import UserViewSet
+from .profile import ProfileViewSet

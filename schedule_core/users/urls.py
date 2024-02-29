@@ -8,9 +8,11 @@ from users.views.registration import RegistrationAPIView
 from users.views.login import LoginView
 from users.views.confirmation_register import ConfirmationRegisterView
 from users.views.users import UserViewSet
+from users.views.profile import ProfileViewSet
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='users')
+router.register('profile', ProfileViewSet, basename='profile')
 
 urlpatterns = [
     path('register/', RegistrationAPIView.as_view(), name='register'),

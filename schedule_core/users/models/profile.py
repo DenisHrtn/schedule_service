@@ -18,8 +18,8 @@ class TargetChoices(models.TextChoices):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    first_name = models.CharField(max_length=255, blank=True, default='New')
-    last_name = models.CharField(max_length=255, blank=True, default='User')
+    first_name = models.CharField(max_length=25, blank=True, default='New')
+    last_name = models.CharField(max_length=25, blank=True, default='User')
     about_me = models.TextField(blank=True, default='About')
     sex = models.CharField(
         max_length=64,
@@ -35,8 +35,8 @@ class Profile(models.Model):
         null=True,
         blank=True,
     )
-    city = models.CharField(max_length=255, blank=True, default='')
-    country = models.CharField(max_length=255, blank=True, default='')
+    city = models.CharField(max_length=45, blank=True, default='')
+    country = models.CharField(max_length=45, blank=True, default='')
     use_service_for = models.CharField(
         max_length=64,
         choices=TargetChoices.choices,

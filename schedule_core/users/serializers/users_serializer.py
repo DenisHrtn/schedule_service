@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
             'is_verified',
             'profile',
         ]
+        read_only_fields = ['date_joined', 'is_verified']
 
     def get_profile(self, obj):
         profile = Profile.objects.get(user=obj)
@@ -25,29 +26,12 @@ class UserSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-class UserPatchSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(required=False, partial=True)
-
-    class Meta:
-        model = User
-        fields = [
-            'id',
-            'email',
-            'username',
-            'date_joined',
-            'is_verified',
-            'profile',
-        ]
+class UserPatchSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
+    username = serializers.CharField(required=False, max_length=25)
 
     def update(self, instance, validated_data):
-        profile_data = None
-        profile = None
-        profile_data = validated_data.get('profile', {})
-        profile = instance.profile
-
-        # for attr, value in profile_data.items():
-        #     setattr(profile, attr, value)
-
-        profile.save()
-
+        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+        instance.save()
         return instance
