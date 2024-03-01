@@ -4,10 +4,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser
 from rest_framework import generics
 
-from users.models.user import User
 from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
 from users.serializers.forgot_password_serializer import ForgotPasswordSerializer
-from users.services.email_service import EmailService
 from users.permissions.is_blocked import IsBlocked
 
 
@@ -17,26 +15,10 @@ class ForgotPasswordView(generics.GenericAPIView):
 
     When making a POST request to this view,
     the user password will be reset and a new password will be sent to the user's email.
-
-    Parameters:
-        - permission_classes ([AllowAny]):
-            Permission classes for accessing this view.
-            In this case, it allows any unauthenticated user.
-
-        - serializer_class (ForgotPasswordSerializer):
-            Serializer for input data.
-            It should validate and provide the required user information.
-
-    Methods:
-        - post(request):
-            Handles POST requests for resetting user password.
-            If successful, the user password will be reset and a new password will be sent to the user's email.
-
     """
     permission_classes = [AllowAny, IsBlocked]
     serializer_class = ForgotPasswordSerializer
     parser_classes = [MultiPartParser]
-    sender_service = EmailService()
 
     def post(self, request):
         """
@@ -51,22 +33,8 @@ class ForgotPasswordView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        email = serializer.validated_data['email']
-        user = User.objects.get(email=email)
-
-        new_password = User.objects.make_random_password(length=11)
-
-        user.set_password(new_password)
-        user.save()
-
-        subject = "Your new password"
-        message = ("Your new password has been updated!"
-                   f"Your new password - {new_password}")
-        self.sender_service.send_mail(
-            email=email,
-            subject=subject,
-            message=message
-        )
+        # create method of serializer is invoked to reset password and send email
+        serializer.save()
 
         return Response(
             "Your new password has been sent successfully!",

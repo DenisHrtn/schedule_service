@@ -1,10 +1,11 @@
+from django.http import Http404
 from rest_framework import status, permissions
 from rest_framework import viewsets
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 
 from users.serializers.profile_serializer import ProfileSerializer, ProfileUpdateSerializer
-from users.models import User, Profile
+from users.models import Profile
 from users.permissions.is_blocked import IsBlocked
 
 
@@ -57,7 +58,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
             try:
                 return Profile.objects.select_related('user').filter(user_id=self.request.user.pk)
             except Profile.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+                return Http404
 
     @swagger_auto_schema(auto_schema=None)
     def create(self, request, *args, **kwargs):
