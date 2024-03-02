@@ -1,4 +1,7 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import check_password
+
+from users.models.user import User
 
 
 class ChangePasswordSerializer(serializers.Serializer):
@@ -14,4 +17,6 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError('All fields are required.')
         if new_password != new_password_confirm:
             raise serializers.ValidationError("Passwords are not the same")
+        if not check_password(old_password, new_password):
+            raise serializers.ValidationError("Your old password does not match. If you forgot it, go to recovery.")
         return attrs

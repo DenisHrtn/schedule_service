@@ -3,7 +3,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
-from django.contrib.auth.hashers import check_password
 
 from users.serializers.change_password_serializer import ChangePasswordSerializer
 from schedule_core.swagger_service.apply_swagger_auto_schema import apply_swagger_auto_schema
@@ -53,14 +52,8 @@ class ChangePasswordView(generics.GenericAPIView):
 
         user = request.user
 
-        old_password = serializer.validated_data.get('old_password')
         new_password = serializer.validated_data.get('new_password')
 
-        if not check_password(old_password, user.password):
-            return Response(
-                "Your old password does not match. If you forgot it, go to recovery.",
-                status=status.HTTP_400_BAD_REQUEST
-            )
         user.set_password(new_password)
         user.save()
 
