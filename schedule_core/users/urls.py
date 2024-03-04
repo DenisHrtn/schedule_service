@@ -11,6 +11,7 @@ from users.views.users import UserViewSet
 from users.views.profile import ProfileViewSet
 from users.views.block_users import BlockUsersView
 from users.views.unblock_users import UnblockUsersView
+from users.views.verification import VerificationView
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet, basename='users')
@@ -25,4 +26,5 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     path('block-users', BlockUsersView.as_view(), name='block-users'),
     path('unblock-users', UnblockUsersView.as_view(), name='unblock-users'),
+    path('verify-account', VerificationView.as_view(), name='verify-account'),
 ] + router.urls

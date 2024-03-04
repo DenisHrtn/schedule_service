@@ -120,3 +120,22 @@ class EmailService:
         except Exception as e:
             return Response(f"Something went wrong {e}")
         return Response(f"Email has been sent to {email}", status=status.HTTP_201_CREATED)
+
+    def send_message_after_verification(self, email: str):
+        """
+        Send email after verification user
+        """
+        subject = "Your verification has been approval"
+        message = f"Dear, {email}, you have been approved to verify your account successfully."
+        from_email = settings.EMAIL_HOST_USER
+
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=from_email,
+                recipient_list=[email]
+            )
+        except Exception as e:
+            return Response(f"Something went wrong {e}")
+        return Response(f"Email has been sent to {email}", status=status.HTTP_201_CREATED)
