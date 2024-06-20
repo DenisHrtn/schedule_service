@@ -1,2 +1,2 @@
-from .is_blocked import IsBlocked
-from .is_superuser import IsSuperuser
+from .is_blocked import IsBlocked # noqa
+from .is_superuser import IsSuperuser # noqa

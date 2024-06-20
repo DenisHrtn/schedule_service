@@ -1,11 +1,11 @@
-from .registration import RegistrationAPIView
-from .login import LoginView
-from .logout import LogoutView
-from .confirmation_register import ConfirmationRegisterView
-from .forgot_password import ForgotPasswordView
-from .change_password import ChangePasswordView
-from .users import UserViewSet
-from .profile import ProfileViewSet
-from .block_users import BlockUsersView
-from .unblock_users import UnblockUsersView
-from .verification import VerificationView
+from .registration import RegistrationAPIView # noqa
+from .login import LoginView # noqa
+from .logout import LogoutView # noqa
+from .confirmation_register import ConfirmationRegisterView # noqa
+from .forgot_password import ForgotPasswordView # noqa
+from .change_password import ChangePasswordView # noqa
+from .users import UserViewSet # noqa
+from .profile import ProfileViewSet # noqa
+from .block_users import BlockUsersView # noqa
+from .unblock_users import UnblockUsersView # noqa
+from .verification import VerificationView # noqa

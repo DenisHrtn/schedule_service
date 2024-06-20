@@ -1,4 +1,4 @@
-from .user import User
-from .profile import Profile
-from .create_superuser import Command
-from .denis import Denis
+from .user import User # noqa
+from .profile import Profile # noqa
+from .create_superuser import Command # noqa
+from .denis import Denis # noqa

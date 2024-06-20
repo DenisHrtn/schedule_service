@@ -1,2 +1,2 @@
-from .wsgi import application
-from .asgi import application
+from .wsgi import application # noqa
+from .asgi import application # noqa

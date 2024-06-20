@@ -1,7 +1,7 @@
-from .mark import Mark
-from .category import Category
-from .priority import Priority
-from .schedule import Schedule
-from .history import History
-from .attachment import Attachment
-from .comment import Comment
+from .mark import Mark # noqa
+from .category import Category # noqa
+from .priority import Priority # noqa
+from .schedule import Schedule # noqa
+from .history import History # noqa
+from .attachment import Attachment # noqa
+from .comment import Comment # noqa
