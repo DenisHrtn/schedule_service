@@ -1,4 +1,3 @@
-from .mark import Mark # noqa
 from .category import Category # noqa
 from .priority import Priority # noqa
 from .schedule import Schedule # noqa

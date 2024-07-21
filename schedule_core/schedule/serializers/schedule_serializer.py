@@ -2,6 +2,7 @@ from rest_framework import serializers
 import datetime
 
 from schedule.models import Schedule
+from schedule.models.history import History
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
@@ -41,5 +42,12 @@ class ScheduleSerializer(serializers.ModelSerializer):
         instance.completed = validated_data.get('completed', instance.completed)
         instance.updated_at = datetime.datetime.now()
         instance.save()
+
+        History.objects.create(
+            schedule=instance,
+            changed_at=instance.updated_at,
+            changes=[instance.title, instance.due_date, instance.description,
+                     instance.category, instance.mark, instance.completed]
+        )
 
         return instance

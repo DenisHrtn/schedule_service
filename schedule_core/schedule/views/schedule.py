@@ -14,7 +14,7 @@ class ScheduleViewSet(viewsets.ModelViewSet):
     parser_classes = [parsers.MultiPartParser, ]
 
     def get_queryset(self):
-        return self.request.user.schedules_users.select_related('category', 'mark').defer('user')
+        return self.request.user.schedules_users.select_related('category').defer('user')
 
     # @swagger_auto_schema(auto_schema=None)
     # def update(self, request, *args, **kwargs):
