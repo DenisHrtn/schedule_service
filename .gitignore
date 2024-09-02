@@ -8,6 +8,7 @@ env/
 
 # Ignore database files (if you're using SQLite)
 *.sqlite3
+*.db
 
 # Ignore logs and temp files
 logs/

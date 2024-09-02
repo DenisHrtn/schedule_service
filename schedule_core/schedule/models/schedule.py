@@ -20,7 +20,7 @@ class Schedule(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='schedules_history',
+        related_name='user_schedules',
         default=settings.AUTH_USER_MODEL,
     )
     completed = models.BooleanField(default=False)

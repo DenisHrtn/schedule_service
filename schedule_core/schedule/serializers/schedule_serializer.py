@@ -34,6 +34,9 @@ class ScheduleSerializer(serializers.ModelSerializer):
         if instance.completed:
             raise serializers.ValidationError({'completed': "Task is already completed."})
 
+        if Schedule.user:
+            pass
+
         instance.title = title
         instance.due_date = due_date
         instance.description = validated_data.get('description', instance.description)
