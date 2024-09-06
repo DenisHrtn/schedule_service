@@ -6,10 +6,10 @@ from users.models import User
 
 
 class History(models.Model):
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name='history')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_history', null=True)
     changed_at = models.DateTimeField(auto_now=True)
-    changes = ArrayField(models.TextField())
+    changes = models.TextField()
 
     def __str__(self):
         return f"{self.schedule.title} - {self.changed_at}"

@@ -1,14 +1,33 @@
 from rest_framework import serializers
 import datetime
+import json
 
-from schedule.models import Schedule
+from schedule.models import Schedule, Category
 from schedule.models.history import History
+from schedule.serializers.history_serializer import HistorySerializer
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
+    history = serializers.SerializerMethodField()
+
     class Meta:
         model = Schedule
-        exclude = ['user', ]
+        fields = [
+            'title',
+            'description',
+            'due_date',
+            'category',
+            'mark',
+            'completed',
+            'created_at',
+            'updated_at',
+            'history'
+        ]
+
+    def get_history(self, obj):
+        history = obj.history.all()
+        serializer = HistorySerializer(history, many=True)
+        return serializer.data
 
     def create(self, validated_data):
         if Schedule.objects.filter(user=self.context['request'].user, title=validated_data['title']).exists():
@@ -34,9 +53,6 @@ class ScheduleSerializer(serializers.ModelSerializer):
         if instance.completed:
             raise serializers.ValidationError({'completed': "Task is already completed."})
 
-        if Schedule.user:
-            pass
-
         instance.title = title
         instance.due_date = due_date
         instance.description = validated_data.get('description', instance.description)
@@ -46,11 +62,21 @@ class ScheduleSerializer(serializers.ModelSerializer):
         instance.updated_at = datetime.datetime.now()
         instance.save()
 
+        def custom_serializer(obj):
+            if isinstance(obj, (datetime.date, datetime.datetime)):
+                return obj.isoformat()
+            if isinstance(obj, Category):
+                return str(obj)
+            raise TypeError(f"Type {type(obj)} not serializable")
+
         History.objects.create(
             schedule=instance,
             changed_at=instance.updated_at,
-            changes=[instance.title, instance.due_date, instance.description,
-                     instance.category, instance.mark, instance.completed]
+            changes=json.dumps(
+                [instance.title, instance.due_date, instance.description,
+                 instance.category, instance.mark, instance.completed],
+                default=custom_serializer
+            )
         )
 
         return instance
