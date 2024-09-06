@@ -5,10 +5,12 @@ import json
 from schedule.models import Schedule, Category
 from schedule.models.history import History
 from schedule.serializers.history_serializer import HistorySerializer
+from schedule.serializers.comments_serializer import CommentsSerializer
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
     history = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
 
     class Meta:
         model = Schedule
@@ -21,12 +23,18 @@ class ScheduleSerializer(serializers.ModelSerializer):
             'completed',
             'created_at',
             'updated_at',
-            'history'
+            'history',
+            'comments',
         ]
 
     def get_history(self, obj):
         history = obj.history.all()
         serializer = HistorySerializer(history, many=True)
+        return serializer.data
+
+    def get_comments(self, obj):
+        comments = obj.comments.all()
+        serializer = CommentsSerializer(comments, many=True)
         return serializer.data
 
     def create(self, validated_data):
